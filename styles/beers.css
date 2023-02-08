@@ -36,6 +36,7 @@ html {
 } */
 
 .notification {
+  margin-top: 3rem;
   background: url(../assets/beer-1858.png);
   background-repeat: no-repeat;
   background-color: #a63464;
