@@ -314,3 +314,14 @@ searchBtn.addEventListener("click", () => {
   searchBtn.classList.add("is-danger");
   renderBeerCards(pageSize, beers);
 });
+
+// Implementing functionality for the random beer button - DONE!!!
+
+const randomBeer = document.getElementById("randomBeer");
+randomBeer.addEventListener("click", () => {
+  // Getting a random index for the beer modal
+  const randomIndex = Math.floor(Math.random() * beers.length);
+  const randomBeer = beers[randomIndex];
+
+  showBeerModal(randomBeer);
+});
