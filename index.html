@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <title>Beer Bar Workshop</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./styles/index.css">
+  </head>
+  <body>
+    <nav
+      class="navbar is-spaced has-shadow is-size-5"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="">
+          <img src="./assets/logo.png" width="130" height="28" />
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start" id="navbar-start">
+          <a class="navbar-item has-text-weight-bold" href="./nav/beers.html">Beers</a>
+
+          <a class="navbar-item has-text-weight-light"> Random Beer </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <input class="input" type="text" placeholder="Search beer.." />
+            <div class="buttons">
+              <a class="button is-danger ml-2">
+                <strong>Search</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">   
+
+    <section class="hero is-large is-danger mt-6">
+      <div class="hero-body">
+        <div class="">
+          <p class="title is-size-1">Hello, this is Ivan's Beer World!</p>
+          <p class="subtitle mt-3">
+            This is a simple beer page, you can get all the informations for
+            beers here.
+          </p>
+        </div>
+      </div>     
+    </div>
+    <div class="container container-img">
+      <img id="beer-logo" src="./assets/beer-logo.jpg" alt=""> 
+      <button class="button is-large is-responsive is-light is-rounded is-overlay "><a href="./nav/beers.html"><i class="fas fa-beer"></i>  <i class="fas fa-beer"></i> </a></button>
+    </div>
+    <div class="is-clickable is-relative is-pulled-right mt-3">
+        <button  class="button is-danger is-rounded"><a onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"" style="text-decoration: none; color: white;"><span class="icon is-small">
+            <i class="fas fa-angle-up" aria-hidden="true"></i></a></button>
+    </div>
+    <script src="scripts/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> -->
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beers</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="../styles/beers.css" />
+  </head>
+
+  <body>
+    <nav
+      class="navbar is-spaced has-shadow is-size-5"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="../index.html">
+          <img src="../assets/logo.png" width="130" height="28" />
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start" id="navbar-start">
+          <a class="navbar-item has-text-weight-bold" href="../nav/beers.html"
+            >Beers</a
+          >
+
+          <a class="navbar-item has-text-weight-light"> Random Beer </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <input
+              class="input"
+              type="text"
+              id="searchInput"
+              placeholder="Search beer.."
+            />
+            <div class="buttons">
+              <a id="searchBtn" class="button is-danger ml-2">
+                <i class="fa-solid fa-delete-left"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-4">
+      <div
+        class="notification is-flex is-justify-content-space-between"
+        style="padding: 10px"
+      >
+        <div id="btnShow" class="dropdown mt-5">
+          <div class="dropdown-trigger">
+            <button
+              class="button is-danger"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu3"
+            >
+              <span id="pageSize">Page Size</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+            <div class="dropdown-content">
+              <a href="#" id="show" class="dropdown-item"> Show 5 </a>
+              <a href="#" id="show" class="dropdown-item"> Show 10 </a>
+              <a href="#" id="show" class="dropdown-item"> Show 20 </a>
+            </div>
+          </div>
+        </div>
+        <div id="btnSort" class="dropdown mt-5">
+          <div class="dropdown-trigger">
+            <button
+              class="button is-danger"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu3"
+            >
+              <span>Sort By</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+            <div class="dropdown-content">
+              <a href="#" id="sortAsc" class="dropdown-item"> Name </a>
+              <a href="#" id="sortAbv" class="dropdown-item"> Alc Abv </a>
+              <a href="#" id="sortFirstBrewed" class="dropdown-item">
+                First Brewed</a
+              >
+              <a href="#" id="sortByBitterness" class="dropdown-item">
+                Bitterness</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="columns is-multiline">
+          <!-- beer cards will be inserted here -->
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="beer-modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Modal Title</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Modal content here -->
+        </section>
+        <footer class="modal-card-foot">
+          <!-- <button class="button">Save changes</button> -->
+          <button class="button is-large is-fullwidth is-danger">Close</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script> -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js"
+      integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="../scripts/beers.js"></script>
+  </body>
+</html>
