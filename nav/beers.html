@@ -118,12 +118,38 @@
           </div>
         </div>
       </div>
+      <nav class="pagination" role="navigation" aria-label="pagination">
+        <a
+          id="previousPage"
+          class="pagination-previous is-disabled"
+          title="This is the first page"
+          >Previous</a
+        >
+        <a id="nextPage" class="pagination-next">Next page</a>
+        <ul class="pagination-list">
+          <li>
+            <a
+              class="pagination-link is-current"
+              aria-label="Page 1"
+              aria-current="page"
+              >1</a
+            >
+          </li>
+          <li>
+            <a class="pagination-link" aria-label="Goto page 2">2</a>
+          </li>
+          <li>
+            <a class="pagination-link" aria-label="Goto page 3">3</a>
+          </li>
+        </ul>
+      </nav>
       <div class="container">
         <div class="columns is-multiline">
           <!-- beer cards will be inserted here -->
         </div>
       </div>
     </div>
+
     <div class="modal" id="beer-modal">
       <div class="modal-background"></div>
       <div class="modal-card">

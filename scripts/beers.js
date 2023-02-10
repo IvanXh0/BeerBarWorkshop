@@ -1,35 +1,101 @@
 const base_URL = "https://api.punkapi.com/v2/beers";
 let pageSize = 20;
+let currentPage = 1;
+let totalPages;
+let beers = [];
 
-fetch(`${base_URL}?per_page=${pageSize}`)
+fetch(`${base_URL}?page=${currentPage}&per_page=${pageSize}`)
   .then((res) => res.json())
   .then((data) => {
     beers = data;
-    renderBeerCards(pageSize, beers);
+    renderBeerCards(currentPage, pageSize, beers);
   })
   .catch((err) => console.error(err));
 
-// Show drop down functionality
+document.addEventListener("DOMContentLoaded", () => {
+  const previousPage = document.getElementById("previousPage");
 
-document.addEventListener("DOMContentLoaded", function () {
+  if (previousPage) {
+    previousPage.addEventListener("click", () => {
+      currentPage--;
+      if (currentPage == 1) {
+        previousPage.classList.add("is-disabled");
+      }
+      fetch(`${base_URL}?page=${currentPage}&per_page=${pageSize}`)
+        .then((res) => res.json())
+        .then((data) => {
+          beers = data;
+          renderBeerCards(currentPage, pageSize, beers);
+        });
+    });
+  }
+
+  const nextPage = document.getElementById("nextPage");
+  if (nextPage) {
+    nextPage.addEventListener("click", () => {
+      currentPage++;
+      if (currentPage >= 2) {
+        previousPage.classList.remove("is-disabled");
+      }
+
+      fetch(`${base_URL}?page=${currentPage}&per_page=${pageSize}`)
+        .then((res) => res.json())
+        .then((data) => {
+          beers = data;
+          renderBeerCards(currentPage, pageSize, beers);
+        })
+        .catch((err) => console.error(err));
+    });
+  }
+
+  showNumberPages(selectedPageSize);
+});
+
+let selectedPageSize = 10;
+
+function renderBeerCards(pageNumber, pageSize, beers) {
+  // Clear existing cards
+
+  const beerContainer = document.querySelector(".columns");
+
+  beerContainer.innerHTML = "";
+
+  sortByName(pageSize);
+  sortByABV(pageSize);
+  sortByBitterness(pageSize);
+  sortFirstBrewed(pageSize);
+  showNumberPages(pageSize);
+
+  // Render the desired amount of cards
+
+  const startIndex = 0;
+  const endIndex = startIndex + selectedPageSize;
+
+  for (
+    let i = startIndex;
+    i < endIndex && i + selectedPageSize <= beers.length;
+    i += selectedPageSize
+  ) {
+    for (let j = i; j < i + selectedPageSize && j < beers.length; j++) {
+      const beerCard = createBeerCard(beers[j]);
+      beerContainer.appendChild(beerCard);
+    }
+  }
+}
+
+function showNumberPages() {
   const showButtons = document.querySelectorAll(".dropdown-item[id='show']");
   showButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-      const pageSize = parseInt(this.textContent.split(" ")[2]);
-      console.log(`Show ${pageSize}`);
-      sortByName();
-      // Sorting by ABV - TODO - Finished
-      sortByABV();
-      sortByBitterness();
-      sortFirstBrewed();
-      // Perform the action to show `pageSize` items
-      renderBeerCards(pageSize, beers);
+      selectedPageSize = parseInt(this.textContent.split(" ")[2]);
+      console.log(`Show ${selectedPageSize}`);
+      renderBeerCards(currentPage, selectedPageSize, beers);
       document.querySelector(
         "#pageSize"
-      ).innerHTML = `Page Size (showing ${pageSize}) `;
+      ).innerHTML = `Page Size (showing ${selectedPageSize}) `;
     });
   });
-});
+}
 
 let btnShow = document.getElementById("btnShow");
 let btnSort = document.getElementById("btnSort");
@@ -149,7 +215,7 @@ function sortByName(pageSize) {
         return b.name.localeCompare(a.name);
       }
     });
-    renderBeerCards(pageSize, beers);
+    renderBeerCards(0, pageSize, beers);
   });
 }
 
@@ -165,7 +231,7 @@ function sortByABV(pageSize) {
         return a.abv - b.abv;
       }
     });
-    renderBeerCards(pageSize, beers);
+    renderBeerCards(0, pageSize, beers);
   });
 }
 
@@ -184,7 +250,7 @@ function sortByBitterness(pageSize) {
             return a.ibu - b.ibu;
           }
         });
-        renderBeerCards(pageSize, beers);
+        renderBeerCards(0, pageSize, beers);
       });
   } catch (error) {
     console.error(error);
@@ -192,40 +258,17 @@ function sortByBitterness(pageSize) {
 }
 
 function sortFirstBrewed(pageSize) {
-  try {
-    document.getElementById("sortFirstBrewed").addEventListener("click", () => {
-      beers.sort((a, b) => {
-        let aTimestamp = Date.parse(`01/${a.first_brewed}`);
-        let bTimestamp = Date.parse(`01/${b.first_brewed}`);
-        return bTimestamp - aTimestamp;
-      });
-      renderBeerCards(pageSize, beers);
+  document.getElementById("sortFirstBrewed").addEventListener("click", () => {
+    beers.sort((a, b) => {
+      let aTimestamp = Date.parse(`01/${a.first_brewed}`);
+      let bTimestamp = Date.parse(`01/${b.first_brewed}`);
+      return bTimestamp - aTimestamp;
     });
-  } catch (error) {
-    console.error(error);
-  }
+    renderBeerCards(0, pageSize, beers);
+  });
 }
 
 // Rendering the beer cards depending on the state
-
-function renderBeerCards(pageSize, beers) {
-  // Clear existing cards
-  // beers.sort((a, b) => a.name.localeCompare(b.name));
-
-  const beerContainer = document.querySelector(".columns");
-  beerContainer.innerHTML = "";
-
-  sortByName(pageSize);
-  sortByABV(pageSize);
-  sortByBitterness(pageSize);
-  sortFirstBrewed(pageSize);
-
-  // Render the desired amount of cards
-  for (let i = 0; i < pageSize; i++) {
-    const beerCard = createBeerCard(beers[i]);
-    beerContainer.appendChild(beerCard);
-  }
-}
 
 // Create a modal and its elements
 function showBeerModal(beer) {
@@ -244,7 +287,7 @@ function showBeerModal(beer) {
 
     <p><b>First Brewed:</b> ${beer.first_brewed}</p>
     <p><b>Description:</b> ${beer.description}</p>
-    
+
     <p><b>ABV:</b> ${beer.abv}%</p>
     <p><b>IBU:</b> ${beer.ibu}</p>
     <p><b>Food Pairing:</b> ${beer.food_pairing.join(", ")}</p>
@@ -268,51 +311,51 @@ document
   .querySelector("#beer-modal .button:last-child")
   .addEventListener("click", hideBeerModal);
 
-// Implement search function - WIP
-// Working on a key
-// const searchInput = document.getElementById("searchInput");
-// const searchBtn = document.getElementById("searchBtn");
-
-// searchBtn.addEventListener("click", () => {
-//   const searchTerm = searchInput.value.toLowerCase();
-
-//   const filteredBeers = beers.filter((beer) => {
-//     return beer.name.toLowerCase().includes(searchTerm);
-//   });
-
-//   renderBeerCards(pageSize, filteredBeers);
-// });
-
 // Implement it to render it as you type - DONE!
+// Full API scope - DONE!
 
 const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
 
 searchInput.addEventListener("keyup", () => {
-  const searchTerm = searchInput.value.toLowerCase();
+  const keyword = searchInput.value;
   const searchBtn = document.getElementById("searchBtn");
   searchBtn.classList.remove("is-danger");
   searchBtn.classList.add("is-primary");
-  const filteredBeers = beers.filter((beer) => {
-    return (
-      beer.name.toLowerCase().includes(searchTerm) ||
-      beer.description.toLowerCase().includes(searchTerm)
-    );
-  });
+  fetch(`${base_URL}?beer_name=${keyword}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data.length) {
+        console.log("No beers matching keyword");
+        return;
+      }
+      currentBeerList = data;
+      renderSearchResults(data);
+    });
 
   if (searchInput.value === "") {
     searchBtn.classList.remove("is-primary");
     searchBtn.classList.add("is-danger");
+    renderBeerCards(0, pageSize, beers);
   }
-
-  renderBeerCards(pageSize, filteredBeers);
 });
 
-// Changing the eraser button color based on its content
-const searchBtn = document.getElementById("searchBtn");
+function renderSearchResults(data) {
+  const beerContainer = document.querySelector(".columns");
+  beerContainer.innerHTML = "";
+
+  data.forEach((beer) => {
+    const beerCard = createBeerCard(beer);
+    beerContainer.appendChild(beerCard);
+  });
+}
+
+// // Changing the eraser button color based on its content
+
 searchBtn.addEventListener("click", () => {
   searchInput.value = "";
   searchBtn.classList.add("is-danger");
-  renderBeerCards(pageSize, beers);
+  renderBeerCards(0, pageSize, beers);
 });
 
 // Implementing functionality for the random beer button - DONE!!!
