@@ -12,8 +12,12 @@ fetch(`${base_URL}?page=${currentPage}&per_page=${pageSize}`)
   })
   .catch((err) => console.error(err));
 
+// Pagination functionality
+
 document.addEventListener("DOMContentLoaded", () => {
   const previousPage = document.getElementById("previousPage");
+  const nextPage = document.getElementById("nextPage");
+  const paginationList = document.querySelector(".pagination-list");
 
   if (previousPage) {
     previousPage.addEventListener("click", () => {
@@ -26,11 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((data) => {
           beers = data;
           renderBeerCards(currentPage, pageSize, beers);
+          updatePaginationList(paginationList, currentPage);
         });
     });
   }
 
-  const nextPage = document.getElementById("nextPage");
   if (nextPage) {
     nextPage.addEventListener("click", () => {
       currentPage++;
@@ -43,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((data) => {
           beers = data;
           renderBeerCards(currentPage, pageSize, beers);
+          updatePaginationList(paginationList, currentPage);
         })
         .catch((err) => console.error(err));
     });
@@ -50,6 +55,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showNumberPages(selectedPageSize);
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const paginationLinks = document.querySelectorAll(".pagination-link");
+  paginationLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const page = event.target.textContent;
+      currentPage = page;
+      fetch(`${base_URL}?page=${currentPage}&per_page=${pageSize}`)
+        .then((res) => res.json())
+        .then((data) => {
+          beers = data;
+          renderBeerCards(currentPage, pageSize, beers);
+        })
+        .catch((err) => console.error(err));
+      updatePaginationList(paginationLinks, currentPage);
+    });
+  });
+});
+
+const paginationList = document.querySelector(".pagination-list");
+const pageLinks = paginationList.querySelectorAll(".pagination-link");
+
+pageLinks.forEach((pageLink) => {
+  pageLink.addEventListener("click", () => {
+    const currentPageLink = paginationList.querySelector(".is-current");
+    currentPageLink.classList.remove("is-current");
+    currentPageLink.setAttribute("aria-current", "false");
+
+    pageLink.classList.add("is-current");
+    pageLink.setAttribute("aria-current", "page");
+  });
+});
+
+function updatePaginationList(paginationList, currentPage) {
+  const currentPageLink = paginationList.querySelector(".is-current");
+  currentPageLink.classList.remove("is-current");
+  currentPageLink.setAttribute("aria-current", "false");
+
+  const newCurrentPageLink = paginationList.querySelector(
+    `[aria-label='Goto page ${currentPage}']`
+  );
+
+  if (currentPage === 1) {
+    paginationList
+      .querySelector("[aria-label='Goto page 1']")
+      .classList.add("is-current");
+    paginationList
+      .querySelector("[aria-label='Goto page 1']")
+      .setAttribute("aria-current", "page");
+  } else {
+    newCurrentPageLink.classList.add("is-current");
+    newCurrentPageLink.setAttribute("aria-current", "page");
+  }
+}
 
 let selectedPageSize = 10;
 
@@ -235,7 +294,7 @@ function sortByABV(pageSize) {
   });
 }
 
-// Sort by first brewed - TO DO!!!
+// Sort by first brewed - DONE!!!
 
 function sortByBitterness(pageSize) {
   try {

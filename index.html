@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <title>Beer Bar Workshop</title>
+    <title>Ivan's Beers Shop - Home</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
@@ -38,37 +38,70 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start" id="navbar-start">
-          <a class="navbar-item has-text-weight-bold" href="./nav/beers.html">Beers</a>
+          <a class="navbar-item has-text-weight-bold" href="./nav/beers.html">Catalog</a>
 
-          <a class="navbar-item has-text-weight-light"> Random Beer </a>
+          
         </div>
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <input class="input" type="text" placeholder="Search beer.." />
+            <input id="searchInput" class="input" type="text" placeholder="Search beer.." />
             <div class="buttons">
-              <a class="button is-danger ml-2">
-                <strong>Search</strong>
+              <a id="searchBtn" class="button is-danger ml-2">
+                <i class="fa-solid fa-delete-left"></i>
               </a>
             </div>
           </div>
         </div>
       </div>
     </nav>
-    <div class="container">   
-
-    <section class="hero is-fullheight is-danger mt-6">
+    <div class="container">
+    <section class="hero is-medium is-danger">
       <div class="hero-body">
-        <div class="">
-          <p class="title is-size-1">Hello, this is Ivan's Beer World!</p>
-          <p class="subtitle mt-3">
-            This is a simple beer page, you can get all the informations for
-            beers here.
-          </p>
-          <button class="button-85 button is-medium" role="button"><a href="./nav/beers.html"> Visit our catalog </a></button>
+        <p class="title">
+          Welcome to Ivan's Beers Shop!
+        </p>
+        <p class="subtitle">
+          This is just a taste of what we have.
+        </p>
+        <div class="is-flex is-text-align-center is-justify-content-center">
+          <button class="button-85 button is-large" role="button"><a href="./nav/beers.html"> Visit our full catalog </a></button>
         </div>
-      </div>     
+      </div>
+    </section>
+    <nav class="level mt-5">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Beers</p>
+          <p class="title">200+</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Shops Worldwide</p>
+          <p class="title">20+</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Followers</p>
+          <p class="title">456K</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Likes</p>
+          <p class="title">789</p>
+        </div>
+      </div>
+    </nav>
+  </div>
+    <div class="container mt-5">
+      <div class="columns is-multiline">
+        <!-- beer cards will be inserted here -->
+      </div>
     </div>
+  </div>
     <!-- <div class="container container-img">
       <img id="beer-logo" src="./assets/beer-logo.jpg" alt=""> 
      
