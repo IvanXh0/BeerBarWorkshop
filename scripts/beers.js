@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (currentPage == 1) {
         previousPage.classList.add("is-disabled");
       }
+      if (currentPage < 10) {
+        nextPage.classList.remove("is-disabled");
+      }
       fetch(`${base_URL}?page=${currentPage}&per_page=${pageSize}`)
         .then((res) => res.json())
         .then((data) => {
@@ -40,6 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
       currentPage++;
       if (currentPage >= 2) {
         previousPage.classList.remove("is-disabled");
+      }
+      if (currentPage === 10) {
+        nextPage.classList.add("is-disabled");
       }
 
       fetch(`${base_URL}?page=${currentPage}&per_page=${pageSize}`)
@@ -66,6 +72,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((res) => res.json())
         .then((data) => {
           beers = data;
+          if (currentPage > 1) {
+            previousPage.classList.remove("is-disabled");
+          } else {
+            previousPage.classList.add("is-disabled");
+          }
+          if (currentPage > 9) {
+            nextPage.classList.add("is-disabled");
+          } else {
+            nextPage.classList.remove("is-disabled");
+          }
+
           renderBeerCards(currentPage, pageSize, beers);
         })
         .catch((err) => console.error(err));
@@ -90,6 +107,7 @@ pageLinks.forEach((pageLink) => {
 
 function updatePaginationList(paginationList, currentPage) {
   const currentPageLink = paginationList.querySelector(".is-current");
+  if (!currentPageLink) return;
   currentPageLink.classList.remove("is-current");
   currentPageLink.setAttribute("aria-current", "false");
 
@@ -97,19 +115,11 @@ function updatePaginationList(paginationList, currentPage) {
     `[aria-label='Goto page ${currentPage}']`
   );
 
-  if (currentPage === 1) {
-    paginationList
-      .querySelector("[aria-label='Goto page 1']")
-      .classList.add("is-current");
-    paginationList
-      .querySelector("[aria-label='Goto page 1']")
-      .setAttribute("aria-current", "page");
-  } else {
+  if (newCurrentPageLink) {
     newCurrentPageLink.classList.add("is-current");
     newCurrentPageLink.setAttribute("aria-current", "page");
   }
 }
-
 let selectedPageSize = 10;
 
 function renderBeerCards(pageNumber, pageSize, beers) {

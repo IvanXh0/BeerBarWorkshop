@@ -127,3 +127,12 @@ html {
 .is-current:hover {
   color: white;
 }
+
+.is-disabled {
+  pointer-events: none;
+}
+
+.pagination-link.is-current {
+  background-color: hsl(347, 90%, 96%);
+  color: black;
+}
