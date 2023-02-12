@@ -272,76 +272,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Function for sorting by Name
 
-// let ascendingOrder = false;
-
-// function sortByName(pageSize) {
-//   document.getElementById("sortAsc").addEventListener("click", () => {
-//     ascendingOrder = !ascendingOrder;
-//     beers.sort((a, b) => {
-//       if (ascendingOrder) {
-//         return a.name.localeCompare(b.name);
-//       } else {
-//         return b.name.localeCompare(a.name);
-//       }
-//     });
-//     renderBeerCards(0, pageSize, beers);
-//   });
-// }
-
 function sortByName(pageSize) {
-  document.getElementById("sortAsc").addEventListener("click", () => {
-    beers.sort((a, b) => a.name.localeCompare(b.name));
-    renderBeerCards(0, pageSize, beers);
-  });
+  const sortAsc = document.getElementById("sortAsc");
+  const sortDesc = document.getElementById("sortDesc");
+  if (sortAsc)
+    sortAsc.addEventListener("click", () => {
+      beers.sort((a, b) => a.name.localeCompare(b.name));
+      renderBeerCards(0, pageSize, beers);
+    });
+  if (sortDesc)
+    sortDesc.addEventListener("click", () => {
+      beers.sort((a, b) => b.name.localeCompare(a.name));
+      renderBeerCards(0, pageSize, beers);
+    });
 }
 
 // Sorting by ABV
 
 function sortByABV(pageSize) {
-  document.getElementById("sortAbv").addEventListener("click", () => {
-    ascendingOrder = !ascendingOrder;
-    beers.sort((a, b) => {
-      if (ascendingOrder) {
-        return b.abv - a.abv;
-      } else {
-        return a.abv - b.abv;
-      }
+  const sortByAbv = document.getElementById("sortAbv");
+  const sortByAbvDesc = document.getElementById("sortAbvDesc");
+  if (sortByAbv)
+    sortByAbv.addEventListener("click", () => {
+      beers.sort((a, b) => b.abv - a.abv);
+      renderBeerCards(0, pageSize, beers);
     });
-    renderBeerCards(0, pageSize, beers);
-  });
+  if (sortByAbvDesc)
+    sortByAbvDesc.addEventListener("click", () => {
+      beers.sort((a, b) => a.abv - b.abv);
+      renderBeerCards(0, pageSize, beers);
+    });
 }
 
 // Sort by first brewed - DONE!!!
 
 function sortByBitterness(pageSize) {
-  try {
-    document
-      .getElementById("sortByBitterness")
-      .addEventListener("click", () => {
-        ascendingOrder = !ascendingOrder;
-        beers.sort((a, b) => {
-          if (ascendingOrder) {
-            return b.ibu - a.ibu;
-          } else {
-            return a.ibu - b.ibu;
-          }
-        });
-        renderBeerCards(0, pageSize, beers);
-      });
-  } catch (error) {
-    console.error(error);
-  }
+  const sortByBitterness = document.getElementById("sortByBitterness");
+  const sortByBitternessDesc = document.getElementById("sortByBitternessDesc");
+  if (sortByBitterness)
+    sortByBitterness.addEventListener("click", () => {
+      beers.sort((a, b) => b.ibu - a.ibu);
+      renderBeerCards(0, pageSize, beers);
+    });
+  if (sortByBitternessDesc)
+    sortByBitternessDesc.addEventListener("click", () => {
+      beers.sort((a, b) => a.ibu - b.ibu);
+      renderBeerCards(0, pageSize, beers);
+    });
 }
 
 function sortFirstBrewed(pageSize) {
-  document.getElementById("sortFirstBrewed").addEventListener("click", () => {
-    beers.sort((a, b) => {
-      let aTimestamp = Date.parse(`01/${a.first_brewed}`);
-      let bTimestamp = Date.parse(`01/${b.first_brewed}`);
-      return bTimestamp - aTimestamp;
+  const sortFirstBrewed = document.getElementById("sortFirstBrewed");
+  const sortFirstBrewedDesc = document.getElementById("sortFirstBrewedDesc");
+  if (sortFirstBrewed)
+    sortFirstBrewed.addEventListener("click", () => {
+      beers.sort((a, b) => {
+        let aTimestamp = Date.parse(`01/${a.first_brewed}`);
+        let bTimestamp = Date.parse(`01/${b.first_brewed}`);
+        return bTimestamp - aTimestamp;
+      });
+      renderBeerCards(0, pageSize, beers);
     });
-    renderBeerCards(0, pageSize, beers);
-  });
+  if (sortFirstBrewedDesc)
+    sortFirstBrewedDesc.addEventListener("click", () => {
+      beers.sort((a, b) => {
+        let aTimestamp = Date.parse(`01/${a.first_brewed}`);
+        let bTimestamp = Date.parse(`01/${b.first_brewed}`);
+        return aTimestamp - bTimestamp;
+      });
+      renderBeerCards(0, pageSize, beers);
+    });
 }
 
 // Rendering the beer cards depending on the state
