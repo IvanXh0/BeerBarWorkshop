@@ -272,18 +272,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Function for sorting by Name
 
-let ascendingOrder = false;
+// let ascendingOrder = false;
+
+// function sortByName(pageSize) {
+//   document.getElementById("sortAsc").addEventListener("click", () => {
+//     ascendingOrder = !ascendingOrder;
+//     beers.sort((a, b) => {
+//       if (ascendingOrder) {
+//         return a.name.localeCompare(b.name);
+//       } else {
+//         return b.name.localeCompare(a.name);
+//       }
+//     });
+//     renderBeerCards(0, pageSize, beers);
+//   });
+// }
 
 function sortByName(pageSize) {
   document.getElementById("sortAsc").addEventListener("click", () => {
-    ascendingOrder = !ascendingOrder;
-    beers.sort((a, b) => {
-      if (ascendingOrder) {
-        return a.name.localeCompare(b.name);
-      } else {
-        return b.name.localeCompare(a.name);
-      }
-    });
+    beers.sort((a, b) => a.name.localeCompare(b.name));
     renderBeerCards(0, pageSize, beers);
   });
 }

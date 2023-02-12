@@ -1,3 +1,7 @@
+body {
+  perspective: 2500px;
+}
+
 html:focus-within {
   scroll-behavior: smooth;
 }
@@ -77,4 +81,8 @@ html:focus-within {
 .button-85:active {
   background: var(--color);
   color: #fff;
+}
+
+.image {
+  transition: all 0.75s ease-out;
 }

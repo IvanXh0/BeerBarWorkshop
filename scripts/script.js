@@ -80,6 +80,16 @@ function createBeerCard(beer) {
   // Append the card to the column
   column.appendChild(card);
 
+  //Creating a 3D effect
+
+  column.addEventListener("mouseenter", (e) => {
+    beerImage.style.transform = "translateZ(200px) rotateZ(-360deg)";
+  });
+
+  column.addEventListener("mouseleave", (e) => {
+    beerImage.style.transform = "translateZ(0px) rotateZ(0deg)";
+  });
+
   return column;
 }
 function renderBeerCards(pageSize, beers) {
